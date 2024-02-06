@@ -3,6 +3,7 @@ import App from "./components/App";
 import Room from "./components/Room/Room";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import Logout from "./components/Auth/Logout";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
   {
     path: '/register',
     element: <Register />
+  },
+  {
+    path: '/logout',
+    element: <Logout />
   },
   {
     path: '/room/:id',

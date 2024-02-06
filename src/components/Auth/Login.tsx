@@ -1,12 +1,15 @@
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useContext, useState } from 'react'
 import Header from '../Header'
 import { Button, Form } from 'react-bootstrap'
 import './styles/index.css'
-import axios from '../../axiosConfig'
+import { AuthContext } from '../../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
 
   const [userInfo, setUserInfo] = useState({})
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const handleUserInfoUpdate = (event: any) => {
     setUserInfo({
@@ -17,9 +20,8 @@ export default function Login() {
 
   const handleLoginFormSubmit = async (event: FormEvent) => {
     event.preventDefault()
-
-    await axios.post('/login', userInfo)
-      .then(res => localStorage.setItem('token', res.data.token));
+    login(userInfo);
+    navigate('/');
   }
 
   return (

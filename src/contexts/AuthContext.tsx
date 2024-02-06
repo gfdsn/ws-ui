@@ -1,35 +1,50 @@
 import axios from "../axiosConfig";
-import { ReactNode, useState } from "react";
-import { createContext } from "vm";
+import { createContext, ReactNode, useState } from "react";
 
 interface User {
-  id: string,
-  name: string,
-  email: string
+  id: string;
+  name: string;
+  email: string;
 }
-type AuthContextProviderProps = { children: ReactNode }
+
+type AuthContextProviderProps = { children: ReactNode };
+
 type AuthContextProps = {
-  user: User,  
-  token: string,
-}
+  user: User | undefined;
+  token: string; 
+  login: (userInfo: any) => void;
+  register: (userInfo: any) => void;
+  logout: () => void
+};
 
-export const AuthContext = createContext({} as AuthContextProps)
+export const AuthContext = createContext({} as AuthContextProps);
 
-export function AuthContextProvider({children}: AuthContextProviderProps)  {
+export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   const [user, setUser] = useState<User>();
   const [token, setToken] = useState<string>(''); 
 
-  async function login() {
+  async function login(userInfo: any) {
+    await axios.post('/login', userInfo)
+      .then(res => {
+        localStorage.setItem('token', res.data.token)
+        setUser(res.data.user);
+        setToken(res.data.token);
+      });
+  }
 
-    await axios.post('/login')
-      .then(res => console.log(res))
-    
+  async function register(userInfo: any) {
+    await axios.post('/register', userInfo)
+      .then(res => console.log(res));
+  }
+
+  function logout() {
+    localStorage.removeItem('token')
   }
 
   return (
-    <AuthContext.Provider value={{user}}>
+    <AuthContext.Provider value={{ user, token, login, register, logout }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
