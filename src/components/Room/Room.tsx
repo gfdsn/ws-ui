@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Header from '../Header';
 import useWebSocket from 'react-use-websocket';
 import { Button } from 'react-bootstrap';
+import { AuthContext } from '../../contexts/AuthContext';
 
 interface Message {
   _id: string;
@@ -17,8 +18,9 @@ export default function Room() {
   const [msg, setMsg] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [previousMessagesReceived, setPreviousMessagesReceived] = useState<boolean>(false);
+  const {user} = useContext(AuthContext)
 
-  const { sendMessage } = useWebSocket(`ws://localhost:8080/chatapp/room/${roomId}`, {
+  const { sendJsonMessage } = useWebSocket(`ws://localhost:8080/chatapp/room/${roomId}`, {
     onOpen: () => console.log('connected'),
     onMessage: (message: WebSocketEventMap['message']) => {
       const roomMessages = JSON.parse(message.data);
@@ -34,9 +36,14 @@ export default function Room() {
   });
 
   const sendMsg = () => {
-    sendMessage(msg);
+    sendJsonMessage({message: msg, authorId: "123"});
     setMsg('');
   };
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages])
+  
 
   return (
     <>
