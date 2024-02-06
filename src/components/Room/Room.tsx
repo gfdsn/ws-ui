@@ -36,15 +36,16 @@ export default function Room() {
   });
 
   const sendMsg = () => {
-    sendJsonMessage({message: msg, authorId: "123"});
-    setMsg('');
+    if (user) {
+      sendJsonMessage({message: msg, authorId: user._id});
+      setMsg('');
+    }
   };
 
   useEffect(() => {
     console.log(messages);
   }, [messages])
   
-
   return (
     <>
       <Header roomId={Number(roomId)} />
