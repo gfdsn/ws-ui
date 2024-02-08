@@ -11,7 +11,7 @@ export default function MessageList({messages, user}: MessageListProps) {
   }
 
   function formatCreatedAt(message: Message) {
-    const messageCreatedAt = new Date(message.created_at);
+    const messageCreatedAt = new Date(message.createdAt);
     const messageCreatedAtDate = `${messageCreatedAt.toLocaleDateString().replaceAll('/', '-')} `
     const messageCreatedAtTime = `${formatSingleNums(messageCreatedAt.getHours())}:${formatSingleNums(messageCreatedAt.getMinutes())}`
     const formattedDate = `${messageCreatedAtDate} at ${messageCreatedAtTime}`
@@ -32,7 +32,7 @@ export default function MessageList({messages, user}: MessageListProps) {
               backgroundColor: message.authorId == user?._id ? "#a3a3a3" : "#94a3b8", 
               alignSelf: message.authorId == user?._id ? "end" : "start"
             }}>
-              <span className='' style={{color: '#1e293b'}}>{user?.name}</span>
+              <span className='' style={{color: '#1e293b'}}>{message.author ? message.author.name : user?.name}</span>
               <p className='my-2'>{message.message}</p>
               <span className='' style={{color: '#1e293b', fontSize: '13px'}}>{formattedCreatedAt}</span> 
             </div>
@@ -41,4 +41,5 @@ export default function MessageList({messages, user}: MessageListProps) {
       )}
     </div>
   )
+  
 }

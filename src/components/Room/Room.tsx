@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import Header from '../Header';
 import useWebSocket from 'react-use-websocket';
@@ -9,6 +9,7 @@ import MessageList from './micro/MessageList';
 
 export default function Room() {
   const { id: roomId } = useParams<{ id: string }>();
+  const scrollTo = useRef<HTMLDivElement>(null); 
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [previousMessagesReceived, setPreviousMessagesReceived] = useState<boolean>(false);
@@ -30,6 +31,7 @@ export default function Room() {
           );
           return [...prevMessages, ...newMsgs];
         });
+        scrollTo.current?.scrollIntoView({block: 'end', behavior: 'smooth'})
       }
     },
     onError: error => console.log('WebSocket Error:', error),
@@ -39,6 +41,7 @@ export default function Room() {
     <>
       <Header roomId={Number(roomId)} />
       <MessageList messages={messages} user={user} />
+      <div ref={scrollTo}></div>
       <RoomFooter ws={ws} user={user} />
     </>
   );

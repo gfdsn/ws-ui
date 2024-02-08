@@ -9,7 +9,7 @@ export default function RoomFooter({ws, user}: RoomFooterProps) {
 
   const sendMsg = () => {
     if (user) {
-      ws.sendJsonMessage({message: msg, authorId: user._id, created_at: new Date()});
+      ws.sendJsonMessage({message: msg, authorId: user._id, createdAt: new Date()});
       setMsg('');
     }
   };
