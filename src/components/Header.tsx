@@ -14,9 +14,9 @@ export default function Header({roomId}: RoomHeaderProps) {
   const {user} = useContext(AuthContext)
 
   return (
-    <Navbar className="bg-body-tertiary" bg="dark" data-bs-theme="dark" style={{height: '10vh'}}> 
+    <Navbar style={{backgroundColor: '#1e293b', height: '10vh'}}> 
       <Container>
-        <Navbar.Brand>{roomId ? `Rooms #${roomId}` : 'Chat Rooms'}</Navbar.Brand>
+        <Navbar.Brand style={{color: '#fff'}}>{roomId ? `Rooms #${roomId}` : 'Chat Rooms'}</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>

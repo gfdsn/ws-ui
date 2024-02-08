@@ -1,11 +1,6 @@
 import axios from "../axiosConfig";
 import { createContext, ReactNode, useState } from "react";
-
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-}
+import { User } from "../types/User";
 
 type AuthContextProviderProps = { children: ReactNode };
 
