@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import Header from '../Header';
 import useWebSocket from 'react-use-websocket';
-import { Button } from 'react-bootstrap';
 import { AuthContext } from '../../contexts/AuthContext';
 import RoomFooter from './micro/RoomFooter';
 import { Message } from '../../types/Message';
@@ -16,24 +15,26 @@ export default function Room() {
   const {user} = useContext(AuthContext)
 
   const ws = useWebSocket(`ws://localhost:8080/chatapp/room/${roomId}`, {
-    onOpen: () => console.log('connected'),
+    onOpen: () => console.log('connection opened'),
     onMessage: (message: WebSocketEventMap['message']) => {
-      const roomMessages = JSON.parse(message.data);
-
-      if (!previousMessagesReceived){
-        setMessages(roomMessages);
+      const newMessages = JSON.parse(message.data);
+  
+      if (!previousMessagesReceived) {
+        setMessages(newMessages);
         setPreviousMessagesReceived(true);
-
-      } else setMessages(prevMessages => [...prevMessages, roomMessages]);
-
+      } else {
+        setMessages(prevMessages => {
+          // only add no repeated ones
+          const newMsgs = newMessages.filter((message: Message) => 
+            !prevMessages.some(prevMessage => prevMessage._id == message._id)  
+          );
+          return [...prevMessages, ...newMsgs];
+        });
+      }
     },
     onError: error => console.log('WebSocket Error:', error),
   });
 
-  useEffect(() => {
-    console.log(messages);
-  }, [messages])
-  
   return (
     <>
       <Header roomId={Number(roomId)} />
