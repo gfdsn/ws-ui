@@ -4,6 +4,7 @@ import Room from "./components/Room/Room";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import Logout from "./components/Auth/Logout";
+import AuthMiddleware from "./components/Middleware/AuthMiddleware";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,6 @@ export const router = createBrowserRouter([
   },
   {
     path: '/room/:id',
-    element: <Room />
+    element: <AuthMiddleware element={<Room />} />
   }
 ])
