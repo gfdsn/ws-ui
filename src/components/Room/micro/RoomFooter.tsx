@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, InputGroup } from 'react-bootstrap'
+import { Form, InputGroup } from 'react-bootstrap'
 import { RoomFooterProps } from '../../../types/Props';
 import { FaLocationArrow } from "react-icons/fa";
 

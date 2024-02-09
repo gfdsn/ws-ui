@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useEffect, useRef, useState } from 'react'
+import React, { FormEvent, useContext, useState } from 'react'
 import Header from '../Header'
 import { Button, Form } from 'react-bootstrap'
 import './styles/index.css'

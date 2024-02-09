@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import Header from '../Header';
 import useWebSocket from 'react-use-websocket';
@@ -27,7 +27,7 @@ export default function Room() {
         setMessages(prevMessages => {
           // only add no repeated ones
           const newMsgs = newMessages.filter((message: Message) => 
-            !prevMessages.some(prevMessage => prevMessage._id == message._id)  
+            !prevMessages.some(prevMessage => prevMessage._id === message._id)  
           );
           return [...prevMessages, ...newMsgs];
         });

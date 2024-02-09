@@ -3,7 +3,6 @@ import logo from '../assets/logo.svg';
 import './styles/App.css';
 import { Link } from 'react-router-dom';
 import Header from './Header';
-import useWebSocket from 'react-use-websocket';
 
 function App() {
   

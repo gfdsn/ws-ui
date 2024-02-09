@@ -29,8 +29,8 @@ export default function MessageList({messages, user}: MessageListProps) {
             <div key={index} className='my-2 mx-5 rounded px-2' style={{
               maxWidth: '40%',
               wordWrap: 'break-word',
-              backgroundColor: message.authorId == user?._id ? "#a3a3a3" : "#94a3b8", 
-              alignSelf: message.authorId == user?._id ? "end" : "start"
+              backgroundColor: message.authorId === user?._id ? "#a3a3a3" : "#94a3b8", 
+              alignSelf: message.authorId === user?._id ? "end" : "start"
             }}>
               <span className='' style={{color: '#1e293b'}}>{message.author ? message.author.name : user?.name}</span>
               <p className='my-2'>{message.message}</p>

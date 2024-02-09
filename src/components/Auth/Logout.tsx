@@ -10,7 +10,7 @@ export default function Logout() {
   useEffect(() => {
     logout()
     navigate('/')
-  }, [])
+  })
 
   return <></>
 }
